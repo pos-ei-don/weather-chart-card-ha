@@ -148,6 +148,8 @@ units:
 | show_current_condition| boolean | true                     | Show or hide the current weather condition.                                                        |
 | show_attributes       | boolean | true                     | Show or hide a section with attributes such as pressure, humidity, wind direction and speed, etc.  |
 | show_sun              | boolean | true                     | Show or hide the sunset information                                                                |
+| sunrise_entity        | string  | none                     | Entity whose state is a timestamp to show instead of the calculated sunrise (e.g. a local horizon). |
+| sunset_entity         | string  | none                     | Entity whose state is a timestamp to show instead of the calculated sunset.                        |
 | show_time             | boolean | false                    | Show or hide the current time on the card.                                                         |
 | show_time_seconds     | boolean | false                    | Show or hide seconds for the current time on the card.                                             |
 | show_day              | boolean | false                    | Show or hide the current day on the card. (Only visible when show_time is true.)                   |
@@ -372,6 +374,16 @@ forecast:
   type: daily
   show_date_labels: true  # Shows "MON" and "8" on separate lines
 ```
+
+### Sunrise/Sunset from Entities
+In valleys the sun disappears behind the mountains long before the calculated sunset. If you have entities that know
+your local horizon (state = timestamp of the next sunrise/sunset), the card can show those instead:
+```yaml
+show_sun: true
+sunrise_entity: sensor.sun_behind_mountain_next_rising
+sunset_entity: sensor.sun_behind_mountain_next_setting
+```
+If an entity is missing or its state is not a valid time, the calculated value is used.
 
 ### Custom Icon Sizes
 Fine-tune icon sizes for your layout:

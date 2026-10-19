@@ -2424,6 +2424,15 @@ renderSun({ sun, language } = this) {
     sunsetDate = new Date(sun.attributes.next_setting);
   }
 
+  // Optional overrides, e.g. for a local horizon (mountains): entities whose state is a timestamp.
+  const fromEntity = (entityId) => {
+    const st = entityId && this._hass && this._hass.states[entityId];
+    const date = st ? new Date(st.state) : null;
+    return date && !Number.isNaN(date.getTime()) ? date : null;
+  };
+  sunriseDate = fromEntity(config.sunrise_entity) || sunriseDate;
+  sunsetDate = fromEntity(config.sunset_entity) || sunsetDate;
+
   return html`
     <ha-icon icon="mdi:weather-sunset-up"></ha-icon>
       ${sunriseDate ? sunriseDate.toLocaleTimeString(locale, timeOptions) : '--'}<br>
