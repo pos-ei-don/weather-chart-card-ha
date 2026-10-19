@@ -150,6 +150,8 @@ units:
 | show_sun              | boolean | true                     | Show or hide the sunset information                                                                |
 | sunrise_entity        | string  | none                     | Entity whose state is a timestamp to show instead of the calculated sunrise (e.g. a local horizon). |
 | sunset_entity         | string  | none                     | Entity whose state is a timestamp to show instead of the calculated sunset.                        |
+| sunrise_icon          | string/list | mdi:weather-sunset-up | Icon for the sunrise time; a list shows several icons side by side.                               |
+| sunset_icon           | string/list | mdi:weather-sunset-down | Icon for the sunset time, e.g. `[mdi:image-filter-hdr, mdi:arrow-down-thin]` for "behind the mountain". |
 | show_time             | boolean | false                    | Show or hide the current time on the card.                                                         |
 | show_time_seconds     | boolean | false                    | Show or hide seconds for the current time on the card.                                             |
 | show_day              | boolean | false                    | Show or hide the current day on the card. (Only visible when show_time is true.)                   |
@@ -382,6 +384,8 @@ your local horizon (state = timestamp of the next sunrise/sunset), the card can 
 show_sun: true
 sunrise_entity: sensor.sun_behind_mountain_next_rising
 sunset_entity: sensor.sun_behind_mountain_next_setting
+sunrise_icon: [mdi:image-filter-hdr, mdi:arrow-up-thin]     # optional: mountain + arrow
+sunset_icon: [mdi:image-filter-hdr, mdi:arrow-down-thin]
 ```
 If an entity is missing or its state is not a valid time, the calculated value is used.
 

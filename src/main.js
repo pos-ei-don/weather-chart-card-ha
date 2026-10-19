@@ -1957,6 +1957,10 @@ updateChart({ forecasts, forecastChart } = this) {
           align-items: center;
           margin: 1px;
         }
+        .sun-icon-extra {
+          --mdc-icon-size: 16px;
+          margin-inline-start: -6px;
+        }
         .wind-details {
           display: flex;
           justify-content: space-around;
@@ -2433,10 +2437,16 @@ renderSun({ sun, language } = this) {
   sunriseDate = fromEntity(config.sunrise_entity) || sunriseDate;
   sunsetDate = fromEntity(config.sunset_entity) || sunsetDate;
 
+  // sunrise_icon / sunset_icon: one icon or a list shown side by side (e.g. a mountain plus an arrow).
+  const icons = (option, fallback) => {
+    const list = (Array.isArray(option) ? option : [option || fallback]).filter((icon) => typeof icon === 'string' && icon);
+    return (list.length ? list : [fallback]).map((icon, i) => html`<ha-icon class="${i ? 'sun-icon-extra' : ''}" icon="${icon}"></ha-icon>`);
+  };
+
   return html`
-    <ha-icon icon="mdi:weather-sunset-up"></ha-icon>
+    ${icons(config.sunrise_icon, 'mdi:weather-sunset-up')}
       ${sunriseDate ? sunriseDate.toLocaleTimeString(locale, timeOptions) : '--'}<br>
-    <ha-icon icon="mdi:weather-sunset-down"></ha-icon>
+    ${icons(config.sunset_icon, 'mdi:weather-sunset-down')}
       ${sunsetDate ? sunsetDate.toLocaleTimeString(locale, timeOptions) : '--'}
   `;
 }
